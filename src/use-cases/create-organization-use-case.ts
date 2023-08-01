@@ -11,6 +11,7 @@ interface CreateOrganizationUseCaseRequest {
   email: string
   password: string
   phone: string
+  role: 'ADMIN' | 'OWNER' | 'MEMBER'
 }
 
 interface CreateOrganizationUseCaseResponse {
@@ -26,6 +27,7 @@ export class CreateOrganizationUseCase {
     name,
     password,
     phone,
+    role,
   }: CreateOrganizationUseCaseRequest): Promise<CreateOrganizationUseCaseResponse> {
     const password_hash = await hash(password, 6)
 
@@ -35,13 +37,14 @@ export class CreateOrganizationUseCase {
     if (organizationAlreadyExists)
       throw new Error('Organization already exists')
 
-    const organization = await this.organizationRepository.create({
+    const organization = await this.organizationRepository.register({
       address,
       email,
       name,
       password: password_hash,
       phone,
       created_at: new Date(),
+      role,
     })
 
     return { organization }

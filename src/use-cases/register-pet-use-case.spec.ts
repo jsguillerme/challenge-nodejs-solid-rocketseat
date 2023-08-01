@@ -15,7 +15,7 @@ describe('Register Pet Use Case', () => {
   })
 
   it('should be able to register a new pet', async () => {
-    const org = await organizationRepository.create({
+    const org = await organizationRepository.register({
       name: 'Organization Spec',
       email: 'orgspec@mail.com',
       password: 'orgspec123',
@@ -25,6 +25,7 @@ describe('Register Pet Use Case', () => {
         country: 'Brazil',
       },
       created_at: new Date(),
+      role: 'ADMIN',
     })
 
     const { pet } = await sut.execute({

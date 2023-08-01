@@ -5,7 +5,7 @@ import { ObjectId } from 'mongodb'
 export class InMemoryOrganizationRepository implements OrganizationRepository {
   public items: OrganizationType[] = []
 
-  async create(data: OrganizationType) {
+  async register(data: OrganizationType) {
     const organization = {
       id: new ObjectId(),
       name: data.name,
@@ -14,6 +14,7 @@ export class InMemoryOrganizationRepository implements OrganizationRepository {
       password: data.password,
       phone: data.phone,
       created_at: new Date(),
+      role: 'ADMIN',
     }
 
     this.items.push(organization)

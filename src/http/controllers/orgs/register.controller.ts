@@ -1,9 +1,8 @@
 import { makeCreateOrgUseCase } from '@/use-cases/factories/make-create-org-use-case'
 import { FastifyReply, FastifyRequest } from 'fastify'
 import { z } from 'zod'
-import { hash } from 'bcryptjs'
 
-export async function createOrganization(
+export async function registerOrganization(
   request: FastifyRequest,
   reply: FastifyReply,
 ) {
@@ -15,29 +14,32 @@ export async function createOrganization(
       country: z.string().min(3).max(255),
     }),
     email: z.string().email().nonempty().toLowerCase().trim(),
-    password: z.string().min(6).max(64),
+    password: z.string().min(8).max(64),
     phone: z.string(),
+    role: z.enum(['ADMIN', 'OWNER', 'MEMBER']),
   })
 
   // parse para validação body content
-  const { address, email, name, password, phone } =
+  const { address, email, name, password, phone, role } =
     createOrganizationBodySchema.parse(request.body)
 
-  const passowordHash = await hash(password, 6)
-  // validações de negócio e criação do banco de dados (separar depois em service/usecases)
-  const createOrgUseCase = makeCreateOrgUseCase()
+  try {
+    const createOrgUseCase = makeCreateOrgUseCase()
 
-  const { organization } = await createOrgUseCase.execute({
-    name,
-    password: passowordHash,
-    email,
-    address,
-    phone,
-  })
+    await createOrgUseCase.execute({
+      name,
+      password,
+      email,
+      address,
+      phone,
+      role,
+    })
+  } catch (error) {
+    return reply.status(400).send({ message: error.message })
+  }
 
   // retornar resposta
-  return reply.status(201).send({
-    ...organization,
-    password: undefined,
-  })
+  return reply
+    .status(201)
+    .send({ message: 'Organization created successfully' })
 }

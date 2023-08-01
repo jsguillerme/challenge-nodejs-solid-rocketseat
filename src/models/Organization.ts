@@ -37,6 +37,12 @@ const OrganizationSchema = new Schema({
     type: Date,
     default: Date.now,
   },
+
+  role: {
+    type: String,
+    enum: ['ADMIN', 'OWNER', 'MEMBER'],
+    default: 'MEMBER',
+  },
 })
 
 export type OrganizationType = InferSchemaType<typeof OrganizationSchema>

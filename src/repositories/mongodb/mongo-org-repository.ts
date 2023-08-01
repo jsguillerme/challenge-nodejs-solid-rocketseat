@@ -3,7 +3,7 @@ import Org, { OrganizationType } from '@/models/Organization'
 import { ObjectId } from 'mongodb'
 
 export class MongoOrgRepository implements OrganizationRepository {
-  async create(data: OrganizationType): Promise<OrganizationType> {
+  async register(data: OrganizationType): Promise<OrganizationType> {
     const organization = await Org.create(data)
 
     return organization

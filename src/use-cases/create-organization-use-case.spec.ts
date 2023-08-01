@@ -22,6 +22,7 @@ describe('Create Organization Use Case', () => {
         city: 'Fortaleza',
         country: 'Brazil',
       },
+      role: 'ADMIN',
     })
 
     expect(organization.email).toEqual(expect.any(String))
@@ -37,6 +38,7 @@ describe('Create Organization Use Case', () => {
         city: 'Fortaleza',
         country: 'Brazil',
       },
+      role: 'ADMIN',
     })
 
     const passwordMatch = compare('johndoe123', organization.password)
@@ -54,6 +56,7 @@ describe('Create Organization Use Case', () => {
         city: 'Fortaleza',
         country: 'Brazil',
       },
+      role: 'ADMIN',
     })
 
     await expect(() =>
@@ -66,6 +69,7 @@ describe('Create Organization Use Case', () => {
           city: 'Fortaleza',
           country: 'Brazil',
         },
+        role: 'ADMIN',
       }),
     ).rejects.toBeInstanceOf(Error)
   })

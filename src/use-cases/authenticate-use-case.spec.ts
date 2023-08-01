@@ -13,7 +13,7 @@ describe('Create Organization Use Case', () => {
   })
 
   it('should be able to authenticate a organization', async () => {
-    await organizationRepository.create({
+    await organizationRepository.register({
       name: 'Organization 1',
       email: 'johndoe@mail.com',
       password: await hash('johndoe123', 6),
@@ -23,6 +23,7 @@ describe('Create Organization Use Case', () => {
         country: 'Brazil',
       },
       created_at: new Date(),
+      role: 'ADMIN',
     })
 
     const { organization } = await sut.execute({
@@ -35,7 +36,7 @@ describe('Create Organization Use Case', () => {
   })
 
   it('should not be able to authenticate a organization with wrong email', async () => {
-    await organizationRepository.create({
+    await organizationRepository.register({
       name: 'Organization 1',
       email: 'johndoe@mail.com',
       password: await hash('johndoe123', 6),
@@ -45,6 +46,7 @@ describe('Create Organization Use Case', () => {
         country: 'Brazil',
       },
       created_at: new Date(),
+      role: 'ADMIN',
     })
 
     await expect(() =>
@@ -56,7 +58,7 @@ describe('Create Organization Use Case', () => {
   })
 
   it('should not be able to authenticate a organization with password wrong', async () => {
-    await organizationRepository.create({
+    await organizationRepository.register({
       name: 'Organization 1',
       email: 'johndoe@mail.com',
       password: await hash('johndoe123', 6),
@@ -66,6 +68,7 @@ describe('Create Organization Use Case', () => {
         country: 'Brazil',
       },
       created_at: new Date(),
+      role: 'ADMIN',
     })
 
     await expect(() =>
