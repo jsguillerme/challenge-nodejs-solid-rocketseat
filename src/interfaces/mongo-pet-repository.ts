@@ -6,4 +6,5 @@ export interface PetRepository {
   searchByCity(data: string): Promise<PetType[]>
   findById(id: ObjectId): Promise<PetType | null>
   findByDetails(query: string): Promise<PetType[]>
+  findAll(): Promise<PetType[]>
 }

@@ -43,4 +43,10 @@ export class MongoPetRepository implements PetRepository {
 
     return pets
   }
+
+  async findAll(): Promise<PetType[]> {
+    const pets = await Pet.find({})
+
+    return pets
+  }
 }

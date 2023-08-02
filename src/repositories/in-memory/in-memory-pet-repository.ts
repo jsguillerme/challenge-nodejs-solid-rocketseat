@@ -46,4 +46,8 @@ export class InMemoryPetRepository implements PetRepository {
 
     return pets
   }
+
+  async findAll() {
+    return this.items
+  }
 }
