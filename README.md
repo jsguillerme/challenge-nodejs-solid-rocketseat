@@ -20,6 +20,6 @@ This challenge aims to develop a REST API using Node.js and Fastify with MongoDB
 - [x] Para listar os pets, obrigatoriamente precisamos informar a cidade
 - [x] Uma ORG precisa ter um endereço e um número de WhatsApp
 - [x] Um pet deve estar ligado a uma ORG
-- [ ] O usuário que quer adotar, entrará em contato com a ORG via WhatsApp
+- [x] O usuário que quer adotar, entrará em contato com a ORG via WhatsApp
 - [ ] Todos os filtros, além da cidade, são opcionais
-- [ ] Para uma ORG acessar a aplicação como admin, ela precisa estar logada
+- [x] Para uma ORG acessar a aplicação como admin, ela precisa estar logada
