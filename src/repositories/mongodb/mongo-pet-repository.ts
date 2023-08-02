@@ -10,7 +10,13 @@ export class MongoPetRepository implements PetRepository {
   }
 
   async searchByCity(query: string): Promise<PetType[]> {
-    const pets = await Pet.find({ city_available: query, available: true })
+    const pets = await Pet.find({
+      city_available: {
+        $regex: query,
+        $options: 'i',
+      },
+      available: true,
+    })
 
     return pets
   }
@@ -22,8 +28,16 @@ export class MongoPetRepository implements PetRepository {
   }
 
   async findByDetails(query: string): Promise<PetType[]> {
+    if (query.trim() === '') {
+      const pets = await Pet.find({
+        available: true,
+      })
+
+      return pets
+    }
+
     const pets = await Pet.find({
-      details: { $in: [query] },
+      details: { $regex: query, $options: 'i' },
       available: true,
     })
 

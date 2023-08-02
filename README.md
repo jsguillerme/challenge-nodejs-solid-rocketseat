@@ -7,6 +7,8 @@ This challenge aims to develop a REST API using Node.js and Fastify with MongoDB
 - TypeScript
 - MongoDB
 - Zod
+- JWT
+- Vitest (tests unitários)
 
 ## 📝 Requirements:
 - [x] Deve ser possível cadastrar um pet
@@ -21,5 +23,5 @@ This challenge aims to develop a REST API using Node.js and Fastify with MongoDB
 - [x] Uma ORG precisa ter um endereço e um número de WhatsApp
 - [x] Um pet deve estar ligado a uma ORG
 - [x] O usuário que quer adotar, entrará em contato com a ORG via WhatsApp
-- [ ] Todos os filtros, além da cidade, são opcionais
+- [x] Todos os filtros, além da cidade, são opcionais
 - [x] Para uma ORG acessar a aplicação como admin, ela precisa estar logada
