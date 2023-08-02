@@ -1,3 +1,4 @@
+import { UserAlreadyExistsError } from '@/use-cases/errors/user-already-exists-error'
 import { makeCreateOrgUseCase } from '@/use-cases/factories/make-create-org-use-case'
 import { FastifyReply, FastifyRequest } from 'fastify'
 import { z } from 'zod'
@@ -35,7 +36,10 @@ export async function registerOrganization(
       role,
     })
   } catch (error) {
-    return reply.status(400).send({ message: error.message })
+    if (error instanceof UserAlreadyExistsError)
+      return reply.status(400).send({ message: error.message })
+
+    throw error
   }
 
   // retornar resposta

@@ -1,6 +1,8 @@
 import { OrganizationType } from '@/models/Organization'
 import { OrganizationRepository } from '@/interfaces/mongo-organization-repository'
 import { compare } from 'bcryptjs'
+import { InvalidCredentialsError } from './errors/invalid-credentials-error'
+import { ResourceNotFoundError } from './errors/resource-not-found-error'
 
 interface AuthenticateOrgUseCaseRequest {
   email: string
@@ -20,11 +22,11 @@ export class AuthenticateOrgUseCase {
   }: AuthenticateOrgUseCaseRequest): Promise<AuthenticateOrgUseCaseResponse> {
     const organization = await this.organizationRepository.findByEmail(email)
 
-    if (!organization) throw new Error('Organization not found')
+    if (!organization) throw new ResourceNotFoundError()
 
     const passwordMatch = await compare(password, organization.password)
 
-    if (!passwordMatch) throw new Error('Incorrect password')
+    if (!passwordMatch) throw new InvalidCredentialsError()
 
     return {
       organization,

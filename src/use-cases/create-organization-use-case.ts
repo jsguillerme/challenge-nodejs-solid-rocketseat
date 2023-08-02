@@ -1,6 +1,7 @@
 import { OrganizationType } from '@/models/Organization'
 import { OrganizationRepository } from '@/interfaces/mongo-organization-repository'
 import { hash } from 'bcryptjs'
+import { UserAlreadyExistsError } from './errors/user-already-exists-error'
 
 interface CreateOrganizationUseCaseRequest {
   name: string
@@ -34,8 +35,7 @@ export class CreateOrganizationUseCase {
     const organizationAlreadyExists =
       await this.organizationRepository.findByEmail(email)
 
-    if (organizationAlreadyExists)
-      throw new Error('Organization already exists')
+    if (organizationAlreadyExists) throw new UserAlreadyExistsError()
 
     const organization = await this.organizationRepository.register({
       address,

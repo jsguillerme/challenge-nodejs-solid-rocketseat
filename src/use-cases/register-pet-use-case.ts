@@ -2,6 +2,8 @@ import { OrganizationRepository } from '@/interfaces/mongo-organization-reposito
 import { PetRepository } from '@/interfaces/mongo-pet-repository'
 import { PetType } from '@/models/Pet'
 import { Types } from 'mongoose'
+import { ResourceNotFoundError } from './errors/resource-not-found-error'
+import { InvalidParamsProvidedError } from './errors/invalid-params-provided-error'
 
 interface RegisterPetUseCaseRequest {
   name: string
@@ -32,13 +34,13 @@ export class RegisterPetUseCase {
     city_available,
     details,
   }: RegisterPetUseCaseRequest): Promise<RegisterPetUseCaseResponse> {
-    if (!organizationId) throw new Error('Organization need to be provided')
+    if (!organizationId) throw new InvalidParamsProvidedError()
 
     const organization = await this.organizationRepository.findById(
       organizationId,
     )
 
-    if (!organization) throw new Error('Organization not found')
+    if (!organization) throw new ResourceNotFoundError()
 
     const pet = await this.petRepository.register({
       organization: organizationId,
